@@ -5,6 +5,11 @@ app.use(express.json());
 
 const runPredictScript = require("./prediction_ml_model/model_access_script");
 
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+  });
+
+  
 app.post("/predict", (req, res) => {
   try {
     const inputJson = req.body;
