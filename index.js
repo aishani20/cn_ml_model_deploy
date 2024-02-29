@@ -9,21 +9,32 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
   });
 
-  
-app.post("/predict", (req, res) => {
-  try {
-    const inputJson = req.body;
-    runPredictScript(JSON.stringify(inputJson));
 
-    return res.status(200).json({
-        success:true,
-        message:"Prediction completed successfully"
-    })
+app.post('/predict', async (req, res) => {
+  try {
+    const data = req.body;
+    const inputJson = JSON.stringify(data);
+    await runPredictScript(inputJson,(error,result) => {
+        if(error){
+            console.error(error);
+            console.log("Error in running the predict script");
+        }
+        else{
+            console.log(result);
+            res.send({
+                status: "true",
+                message: "Prediction completed successfully",
+                result: result
+            })
+        }
+    });
+    
   } catch (e) {
     console.error(e);
     console.log("Error in the predict route");
   }
 });
+
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
