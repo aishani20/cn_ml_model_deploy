@@ -3,8 +3,6 @@ import pickle
 import json
 import sys
 import os
-import sklearn
-
 
 file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'trained_model.sav')
 
